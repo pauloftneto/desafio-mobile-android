@@ -1,18 +1,5 @@
 <!-- Header-->
 <br />
-<p align="center">
-  <a href="https://github.com/serasaconsumidorbr/desafio-mobile-iOS">
-    <img src="https://turismoemfoco.com.br/v1/wp-content/uploads/2020/05/serasa-logo-nova22.png" alt="Logo" width="180" height="80">
-  </a>
-
-  <h3 align="center">Desafio - Android Developer </h3>
-
-  <p align="center">
-    O nosso aplicativo é uma das nossas soluções para mudar a vida financeira de milhões de brasileiros. <b>Venha fazer parte desse time</b> muito engajado que
-  trabalha para que esse aplicativo chegue da melhor forma na mão dos consumidores.
-  </p>
-</p>
-
 ## Sobre
 <p> Utilizamos este desafio para avaliar a qualidade do seu código, arquitetura, a forma que você organiza os seus pensamentos dentro do git e muitas outras coisas, por isso, sinta-se a vontade e dê o seu melhor! O tempo médio para a entrega deste desafio é de uma semana.</p>
 
@@ -59,5 +46,3 @@
 * Ao finalizar, faça o **pull request** para este repositório
 
 Agora é só torcer!
-
-**Ultimo recadinho:** não utilize o nome da Serasa dentro de seu projeto 😉
