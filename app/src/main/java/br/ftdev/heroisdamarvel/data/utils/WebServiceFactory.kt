@@ -1,0 +1,20 @@
+package br.ftdev.heroisdamarvel.data.utils
+
+import okhttp3.OkHttpClient
+import retrofit2.Retrofit
+import retrofit2.converter.gson.GsonConverterFactory
+
+object WebServiceFactory {
+
+    inline fun <reified T> createWebService(
+        url: String
+    ): T {
+        val retrofit = Retrofit.Builder()
+            .baseUrl(url)
+            .client(OkHttpClient.Builder().build())
+            .addConverterFactory(GsonConverterFactory.create(GsonUtil.gson))
+            .build()
+        return retrofit.create(T::class.java)
+    }
+
+}
