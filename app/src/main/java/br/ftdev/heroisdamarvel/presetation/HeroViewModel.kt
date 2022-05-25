@@ -18,17 +18,17 @@ class HeroViewModel(private val heroServiceRepository: HeroServiceRepository) : 
         val isLoading: Boolean = true
     )
 
-    private val _heros = MutableLiveData(HeroState())
-    private val heroes: MutableLiveData<HeroState> = _heros
+    private val _heroes = MutableLiveData(HeroState())
+    val heroes: MutableLiveData<HeroState> = _heroes
 
     fun getHeroes() {
         viewModelScope.launch {
             heroServiceRepository.getHeroes()
                 .catch { error ->
                     val apiException = error.handleErrorApiMessage()
-                    _heros.postValue(HeroState(error = apiException, isLoading = false))
+                    _heroes.postValue(HeroState(error = apiException, isLoading = false))
                 }.collect { heroList ->
-                    //_heros.postValue(HeroState(listHeroes = heroList, isLoading = false))
+                    _heroes.postValue(HeroState(listHeroes = heroList, isLoading = false))
                 }
 
         }
