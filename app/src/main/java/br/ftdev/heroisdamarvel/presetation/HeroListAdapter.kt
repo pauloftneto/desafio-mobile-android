@@ -10,10 +10,11 @@ import br.ftdev.heroisdamarvel.domain.model.Hero
 class HeroListAdapter : ListAdapter<Hero, HeroListItemViewHolder>(HeroDiffCallBack()) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): HeroListItemViewHolder {
+        val context = parent.context
         val viewBinding =
-            ListItemHeroBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+            ListItemHeroBinding.inflate(LayoutInflater.from(context), parent, false)
 
-        return HeroListItemViewHolder(viewBinding)
+        return HeroListItemViewHolder(viewBinding, context)
     }
 
     override fun onBindViewHolder(holder: HeroListItemViewHolder, position: Int) {
