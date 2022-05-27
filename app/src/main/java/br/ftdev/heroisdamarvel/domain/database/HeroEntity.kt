@@ -1,56 +1,15 @@
 package br.ftdev.heroisdamarvel.domain.database
 
-import androidx.room.*
-import br.ftdev.heroisdamarvel.data.model.HeroResponse
-import br.ftdev.heroisdamarvel.data.model.ResultResponse
-import br.ftdev.heroisdamarvel.data.model.ThumbnailResponse
-import br.ftdev.heroisdamarvel.domain.model.Hero
-import com.google.gson.annotations.SerializedName
+import androidx.room.ColumnInfo
+import androidx.room.Entity
+import androidx.room.PrimaryKey
+import br.ftdev.heroisdamarvel.domain.model.Thumbnail
 
-@Entity(tableName = "hero")
+@Entity(tableName = "hero_table")
 data class HeroEntity(
     @PrimaryKey
     val id: Int,
-    val name: String,
-    val description: String
+    @ColumnInfo val name: String,
+    @ColumnInfo val description: String,
+    val thumbnail: Thumbnail
 )
-
-@Dao
-interface HeroDao {
-
-    @Insert
-    suspend fun add(hero: List<HeroEntity>)
-
-    @Query("SELECT * FROM hero")
-    suspend fun getAll(): List<HeroEntity>
-
-    @Query("DELETE from hero")
-    suspend fun deleteAll()
-
-    @Transaction
-    suspend fun update(hero: List<HeroEntity>) {
-        deleteAll()
-        add(hero)
-    }
-
-}
-
-fun List<ResultResponse>.toEntity(): List<HeroEntity> {
-    return map {
-        HeroEntity(
-            id = it.id,
-            name = it.name,
-            description = it.description
-        )
-    }
-}
-
-fun List<HeroEntity>.toHero(): List<Hero> {
-    return map {
-        Hero(
-            id = it.id,
-            name = it.name,
-            description = it.description
-        )
-    }
-}
