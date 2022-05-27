@@ -1,10 +1,11 @@
 package br.ftdev.heroisdamarvel.presetation
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import androidx.recyclerview.widget.LinearLayoutManager
-import br.ftdev.heroisdamarvel.R
+import androidx.appcompat.app.AppCompatActivity
+import androidx.core.view.isVisible
 import br.ftdev.heroisdamarvel.databinding.ActivityMainBinding
+import br.ftdev.heroisdamarvel.presetation.adapter.HeroListAdapter
+import br.ftdev.heroisdamarvel.presetation.adapter.ItemAdapter
 import com.google.android.material.snackbar.Snackbar
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
@@ -13,28 +14,37 @@ class MainActivity : AppCompatActivity() {
     private val heroViewModel: HeroViewModel by viewModel()
     private lateinit var viewBinding: ActivityMainBinding
 
-    private lateinit var adapter: HeroListAdapter
+    private var adapter = HeroListAdapter()
+    private var itemAdapter = ItemAdapter()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
         setupUi()
-        setupObservers()
+
         fetchData()
+        setupObservers()
     }
 
-    private fun fetchData(){
+    private fun fetchData() {
         heroViewModel.getHeroes()
     }
 
-    private fun setupObservers(){
+    private fun setupObservers() {
         heroViewModel.heroes.observe(this) { heroes ->
+            viewBinding.loading.isVisible = heroes.isLoading
+            viewBinding.recyclerView.isVisible = !heroes.isLoading
+
             heroes.error?.let { error -> setupError(error) }
+
             adapter.submitList(heroes.listHeroes)
+            if (heroes.listHeroes.isNotEmpty()) {
+                itemAdapter.submitList(heroes.listHeroes.subList(0, 5))
+            }
         }
     }
 
-    private fun setupUi(){
+    private fun setupUi() {
         viewBinding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(viewBinding.root)
 
@@ -42,9 +52,9 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun setupAdapter() {
-        adapter = HeroListAdapter()
+        viewBinding.carousel.initialize(itemAdapter)
+
         viewBinding.recyclerView.adapter = adapter
-        viewBinding.recyclerView.layoutManager = LinearLayoutManager(this)
     }
 
     private fun setupError(error: Int) {

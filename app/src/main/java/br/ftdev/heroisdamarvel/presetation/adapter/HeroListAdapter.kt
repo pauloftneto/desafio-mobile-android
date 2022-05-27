@@ -1,13 +1,14 @@
-package br.ftdev.heroisdamarvel.presetation
+package br.ftdev.heroisdamarvel.presetation.adapter
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import br.ftdev.heroisdamarvel.databinding.ListItemHeroBinding
 import br.ftdev.heroisdamarvel.domain.model.Hero
+import br.ftdev.heroisdamarvel.presetation.viewholder.HeroListItemViewHolder
+import br.ftdev.heroisdamarvel.util.BaseDiffCallBack
 
-class HeroListAdapter : ListAdapter<Hero, HeroListItemViewHolder>(HeroDiffCallBack()) {
+class HeroListAdapter : ListAdapter<Hero, HeroListItemViewHolder>(BaseDiffCallBack<Hero>()) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): HeroListItemViewHolder {
         val context = parent.context
@@ -22,10 +23,3 @@ class HeroListAdapter : ListAdapter<Hero, HeroListItemViewHolder>(HeroDiffCallBa
     }
 }
 
-private class HeroDiffCallBack : DiffUtil.ItemCallback<Hero>() {
-    override fun areItemsTheSame(oldItem: Hero, newItem: Hero): Boolean =
-        oldItem == newItem
-
-    override fun areContentsTheSame(oldItem: Hero, newItem: Hero): Boolean =
-        oldItem == newItem
-}

@@ -1,9 +1,9 @@
 package br.ftdev.heroisdamarvel.presetation
 
+
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import br.ftdev.heroisdamarvel.data.local.HeroLocalDataSource
 import br.ftdev.heroisdamarvel.domain.extensions.handleErrorApiMessage
 import br.ftdev.heroisdamarvel.domain.model.Hero
 import br.ftdev.heroisdamarvel.domain.usecase.HeroUseCase
@@ -36,7 +36,12 @@ class HeroViewModel(
                     val apiException = error.handleErrorApiMessage()
                     _heroes.postValue(HeroState(error = apiException, isLoading = false))
                 }.collect { heroList ->
-                    _heroes.postValue(HeroState(listHeroes = heroList, isLoading = false))
+                    _heroes.postValue(
+                        HeroState(
+                            listHeroes = heroList.sortedBy { it.name },
+                            isLoading = false
+                        )
+                    )
                 }
 
         }
